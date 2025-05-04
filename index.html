@@ -147,17 +147,16 @@
             display: inline-block;
         }
 
-        .tingg {
+        .tingg { /* Class specifically for the word "tingg" followed by asterisk */
             position: relative;
             display: inline-block;
         }
 
-        .tingg::after {
+        .tingg::after { /* Adds the asterisk visually */
             content: "*";
-            position: absolute;
-            top: 0;
-            right: -1rem;
+            /* Removed absolute positioning - asterisk flows naturally */
             color: var(--accent);
+            margin-left: 0.1em; /* Optional small space */
         }
 
         .tagline {
@@ -226,6 +225,7 @@
             display: flex;
             align-items: center;
         }
+        /* Logo text needs manual update in HTML */
 
         .nav-menu {
             display: flex;
@@ -356,7 +356,7 @@
         }
 
         .tingg-machine::before {
-            content: '*tingg*';
+            content: 'tingg*'; /* Corrected content */
             position: absolute;
             top: 1rem;
             right: 1rem;
@@ -368,7 +368,7 @@
         }
 
         .tingg-machine::after {
-            content: '*tingg*';
+            content: 'tingg*'; /* Corrected content */
             position: absolute;
             bottom: 1rem;
             left: 1rem;
@@ -564,6 +564,7 @@
             flex-basis: 100%;
             text-align: center;
         }
+        /* Footer logo text needs manual update in HTML */
 
         .footer-nav {
             list-style: none;
@@ -687,7 +688,7 @@
             transform: translateY(0);
         }
 
-        /* Loading animation */
+        /* --- Loading animation --- */
         .loader {
             position: fixed;
             top: 0;
@@ -699,12 +700,14 @@
             justify-content: center;
             align-items: center;
             z-index: 2000;
-            transition: opacity 0.5s ease-out 0.3s, visibility 0.5s ease-out 0.3s;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out; /* Fade out transition */
+            transition-delay: 0s; /* Ensure fade out delay is reset initially */
         }
 
         .loader.hidden {
             opacity: 0;
             visibility: hidden;
+            /* Delay is set by JS after animation */
         }
 
         .typewriter {
@@ -712,32 +715,36 @@
             color: var(--accent);
             font-size: clamp(1.5rem, 5vw, 2rem);
             position: relative;
-            width: fit-content;
+            width: fit-content; /* Important for cursor positioning */
+            min-height: 1.2em; /* Prevent layout shift */
+            /* Add border-right for cursor effect instead of ::after initially */
+            border-right: 0.1em solid var(--accent);
+            animation: blink 0.7s step-end infinite; /* Apply blink directly */
+            white-space: nowrap; /* Keep text on one line during typing */
+            overflow: hidden; /* Hide text until typed */
         }
 
-        .typewriter::after {
-            content: '|';
-            position: absolute;
-            right: -8px;
-            bottom: 0;
-            animation: blink 0.7s infinite;
-        }
+        /* No need for .typewriter::after anymore for blinking */
 
         @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+            from, to { border-color: transparent; }
+            50% { border-color: var(--accent); }
         }
+        /* --- End Loading animation --- */
+
     </style>
 </head>
 <body>
     <!-- Loading Screen -->
     <div class="loader">
-        <div class="typewriter">*tingg*</div>
+        <!-- Text will be added by JS -->
+        <div class="typewriter"></div>
     </div>
 
     <!-- Navigation -->
     <nav class="nav-container">
         <div class="nav-wrapper">
+            <!-- Corrected Logo Text -->
             <a href="#home" class="site-logo">
                 <span class="iconify" data-icon="ph:vinyl-record-fill" style="color: #f0a500; margin-right: 8px;"></span>
                 <span class="mono">TINGG*</span>
@@ -763,7 +770,8 @@
     <section id="home" class="hero">
         <div class="hero-bg"></div> <!-- Background Image/Color Div -->
         <div class="hero-content fade-in">
-            <h1 class="hero-title">Spoken Jazz & the <span class="tingg accent">tingg</span> Machine</h1>
+            <!-- Corrected Hero Title -->
+            <h1 class="hero-title">Spoken Jazz & the <span class="tingg">tingg</span> Machine</h1>
             <p class="tagline">A creative community ignites in a drab Navy town outside Seattle, adding color to the landscape & creating a renaissance despite the blue collar world.</p>
         </div>
         <a href="#story" class="scroll-prompt">
@@ -783,8 +791,8 @@
                     <p>In Bremerton, a Navy town painted in shades of grey, the paths of guitarist Bub Pratt and bassist Andrew converge at Olympic College. Bub, a scholarship student living a transient life fueled by poetry and improvisation, contrasts with the meticulous, focused Andrew, newly arrived and seeking structure. Despite their differences, their shared passion for jazz forges an unlikely bond, positioning them as anchors for a burgeoning creative scene.</p>
 
                     <blockquote>"If he plays more, you play less." <span class="accent">- Miles Davis</span></blockquote>
-
-                    <p>Amidst jam sessions fueled by Pizneon Greens and bootleg coffee, open mics at the divey Old Town Tavern, and the constant rhythm of Bub's vintage Remington typewriter – the *tingg* Machine – a community sparks.</p>
+                    <!-- Corrected Text -->
+                    <p>Amidst jam sessions fueled by Pizneon Greens and bootleg coffee, open mics at the divey Old Town Tavern, and the constant rhythm of Bub's vintage Remington typewriter – the tingg* Machine – a community sparks.</p>
                 </div>
                 <!-- Image Removed -->
             </div>
@@ -821,9 +829,10 @@
                 <div class="tingg-machine fade-in">
                     <!-- Image Removed -->
                     <div>
-                        <h3>The <span class="accent">*tingg*</span> Machine</h3>
+                        <!-- Corrected Title/Text -->
+                        <h3>The <span class="accent">tingg*</span> Machine</h3>
                         <p>Central to Bub's world is his late 40's Remington portable typewriter, the <span class="mono">tingg* Machine</span>. It's not just a tool for his zines; it's a percussion instrument, a character, the relentless rhythm section for his spoken jazz dreams.</p>
-                        <p>Its <span class="accent">*tingg*</span> punctuates the narrative, a mechanical heartbeat in the digital age. Worn keys, sticky ribbon, the satisfying clack of thoughts becoming tangible – the machine embodies Bub's approach to art: imperfect, analog, refusing to be silenced.</p>
+                        <p>Its <span class="accent">tingg*</span> punctuates the narrative, a mechanical heartbeat in the digital age. Worn keys, sticky ribbon, the satisfying clack of thoughts becoming tangible – the machine embodies Bub's approach to art: imperfect, analog, refusing to be silenced.</p>
                     </div>
                 </div>
 
@@ -914,12 +923,13 @@
                     </div>
                      <div class="sound-card fade-in">
                          <h3><span class="iconify" data-icon="mdi:typewriter" style="color: var(--accent); margin-right: 8px;"></span> Spoken Word & Poetry</h3>
-                         <p>Bub's poetry, often performed alongside the music, adds a layer of narrative and percussive texture. The *tingg* of his typewriter is an integral part of the soundscape.</p>
+                         <!-- Corrected Text -->
+                         <p>Bub's poetry, often performed alongside the music, adds a layer of narrative and percussive texture. The tingg* of his typewriter is an integral part of the soundscape.</p>
                          <ul class="song-list">
                               <li>Beat Generation poets</li>
                               <li>Free verse rhythm</li>
                               <li>Observational & confessional</li>
-                              <li>The *tingg* Machine</li>
+                              <li>The tingg* Machine</li>
                           </ul>
                     </div>
                      <div class="sound-card fade-in">
@@ -940,12 +950,14 @@
     <!-- Author Section -->
     <section id="author" class="author-section">
         <div class="content-wrapper">
-             <h2 class="fade-in">The Author: <span class="accent">[Your Name/Pen Name]</span></h2>
+             <h2 class="fade-in">The Author: <span class="accent">Bub Pratt</span></h2>
             <div class="author-grid">
                 <!-- Image Removed -->
                 <div class="fade-in">
-                    <p>Brief bio paragraph about the author. Mention connection to the setting or themes if applicable. Talk about writing style or inspiration.</p>
-                    <p>Another paragraph perhaps, elaborating on the project or personal connection to jazz, poetry, or the Pacific Northwest.</p>
+                    <p>Bub Pratt is a versatile musician, producer, writer, and the founder of Kukuau Studio, a community arts and music hub in Hilo, Hawaii. Originally from the Kitsap area of Washington state, Pratt's musical journey began early, influenced by jazz, beat poetry and his many close friends. He graduated from North Kitsap High School in 1994 and later studied music and creative writing at Olympic College.
+After developing his eclectic style through various bands and projects in Washington, Pratt relocated to Hawaii's Big Island. Identifying a need within the local arts scene, he established Kukuau Studio around 2015. The studio serves as a space for music instruction, recording, and diverse live events, fostering collaboration among artists. Pratt continues to perform, teach, produce, and organize events, playing a key role in Hilo's creative community.
+</p>
+                    <p></p>
                     <p class="dedication">"Dedicated to the artists who find their rhythm in the rain."</p>
                 </div>
             </div>
@@ -956,6 +968,7 @@
     <section id="gallery" class="gallery-section">
         <div class="content-wrapper">
             <h2 class="fade-in">Gallery: <span class="accent">Visual Notes</span></h2>
+            <!-- Corrected Text -->
             <p class="fade-in">A collection of images capturing the mood, setting, and spirit of Spoken Jazz & the tingg* Machine.</p>
 
             <div class="gallery-masonry">
@@ -968,6 +981,7 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content">
+             <!-- Corrected Logo Text -->
              <div class="footer-logo"><span class="mono">TINGG* MACHINE</span> © <span id="current-year"></span></div>
             <nav>
                  <ul class="footer-nav">
@@ -982,22 +996,58 @@
             </nav>
         </div>
         <div class="copyright">
+             <!-- Corrected Text -->
              Website designed with <span class="iconify" data-icon="mdi:heart" style="color: var(--accent);"></span> | Spoken Jazz & the tingg* Machine
         </div>
     </footer>
 
 
-    <!-- Add this script block right before the closing </body> tag -->
+    <!-- === SCRIPT SECTION (WITH TYPEWRITER LOGIC) === -->
     <script>
-        // --- Loader Hiding ---
-        window.addEventListener('load', () => {
-            const loader = document.querySelector('.loader');
-            if (loader) {
-                loader.classList.add('hidden');
+        // --- Typewriter Loader Logic ---
+        const loader = document.querySelector('.loader');
+        const typewriterElement = document.querySelector('.loader .typewriter');
+        const textToType = "tingg*";
+        const typingSpeed = 150; // Milliseconds per character
+        const finalBlinkDelay = 1000; // Milliseconds to blink after typing
+
+        function typeCharacter(index) {
+            if (index < textToType.length) {
+                typewriterElement.textContent += textToType.charAt(index);
+                setTimeout(() => typeCharacter(index + 1), typingSpeed);
+            } else {
+                // Typing finished, wait for final blinks then hide
+                // Add delay for final blinks before starting fade-out transition
+                const fadeOutDelay = finalBlinkDelay; // Use the final blink delay
+                loader.style.transitionDelay = `${fadeOutDelay / 1000}s`; // Set fade-out delay
+                setTimeout(() => {
+                    loader.classList.add('hidden');
+                }, fadeOutDelay); // Hide after the final blink delay
             }
-            // Set current year in footer
-            document.getElementById('current-year').textContent = new Date().getFullYear();
+        }
+
+        // Start typing animation when the DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            // Clear any initial text just in case
+            if (typewriterElement) typewriterElement.textContent = '';
+            // Start typing after a short delay
+            setTimeout(() => typeCharacter(0), 50);
         });
+
+        // --- General Page Load Actions ---
+        window.addEventListener('load', () => {
+            // This listener is still useful if the main content takes longer
+            // to load than the typewriter animation.
+            // We primarily rely on the typewriter animation callback now
+            // to hide the loader, but this can be a fallback.
+
+            // Set current year in footer
+            const currentYearElement = document.getElementById('current-year');
+             if (currentYearElement) {
+                 currentYearElement.textContent = new Date().getFullYear();
+             }
+        });
+
 
         // --- Mobile Menu Toggle ---
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -1015,7 +1065,6 @@
                 }
             });
 
-            // Close menu when a link is clicked
             const navLinks = navMenu.querySelectorAll('.nav-link');
             navLinks.forEach(link => {
                 link.addEventListener('click', () => {
@@ -1026,7 +1075,6 @@
                     }
                 });
             });
-             // Close menu if clicking outside of it
              document.addEventListener('click', (event) => {
                  if (navMenu.classList.contains('active') && !navMenu.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
                      navMenu.classList.remove('active');
@@ -1079,7 +1127,7 @@
         }, { passive: true });
 
     </script>
-    <!-- End of added script block -->
+    <!-- End of script block -->
 
 </body>
 </html>
