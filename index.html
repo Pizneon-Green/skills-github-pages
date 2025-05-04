@@ -126,8 +126,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* === ADD YOUR HERO BACKGROUND IMAGE HERE === */
-            /* background: url('images/hero-background.jpg') no-repeat center center/cover; */
+            /* Background image removed */
             background-color: #333; /* Fallback color */
             opacity: 0.4;
             filter: grayscale(50%);
@@ -280,55 +279,38 @@
         }
 
         .story-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Restored 2-column layout */
-            gap: 3rem;
-            align-items: center;
-            margin-bottom: 3rem; /* Space before the next block of text */
+            display: grid; /* Keep as grid in case you add image back later */
+            grid-template-columns: 1fr; /* Force single column */
+            gap: 1rem; /* Reduce gap */
+            align-items: start; /* Align content to top */
+            margin-bottom: 3rem;
         }
 
-        /* === RESTORED .story-image styles === */
-        .story-image {
-            width: 100%;
-            height: auto; /* Allow aspect ratio */
-            max-height: 500px; /* Limit height */
-            object-fit: cover;
-            border-radius: 5px;
-            filter: grayscale(30%);
-            transition: filter 0.5s;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            display: block; /* Prevent extra space below image */
-        }
-
-        .story-image:hover {
-            filter: grayscale(0%);
-        }
-        /* === END RESTORED .story-image styles === */
-
+        /* Removed .story-image styles */
 
         blockquote {
             font-family: var(--heading-font);
             font-style: italic;
-            font-size: clamp(1.3rem, 3vw, 1.5rem); /* Slightly adjust size */
+            font-size: clamp(1.3rem, 3vw, 1.5rem);
             padding-left: 2rem;
             position: relative;
             margin: 2rem 0;
             line-height: 1.4;
-            color: #555; /* Slightly darker text for blockquote */
+            color: #555;
         }
 
         blockquote::before {
-            content: '"'; /* Use standard double quote */
+            content: '"';
             font-family: var(--heading-font);
             position: absolute;
-            left: -0.5rem; /* Adjust position */
-            top: -1.5rem; /* Adjust position */
-            font-size: 6rem; /* Larger quote mark */
+            left: -0.5rem;
+            top: -1.5rem;
+            font-size: 6rem;
             color: var(--accent);
-            opacity: 0.3; /* Slightly less opaque */
+            opacity: 0.3;
             line-height: 1;
         }
-        blockquote span.accent { /* Style the accent text within blockquote */
+        blockquote span.accent {
              font-weight: bold;
         }
 
@@ -342,14 +324,14 @@
         .world-container {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 2rem; /* Slightly reduce gap */
+            gap: 2rem;
         }
 
         .location-card {
             padding: 2rem;
             background-color: rgba(255, 255, 255, 0.05);
             border-radius: 8px;
-            margin-bottom: 1rem; /* Reduce margin */
+            margin-bottom: 1rem;
             border-left: 4px solid var(--accent);
             transition: transform 0.3s, box-shadow 0.3s;
         }
@@ -358,21 +340,19 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
-        .location-card h3 span.accent { /* Style accent within location card */
-             font-weight: normal; /* Keep heading style */
+        .location-card h3 span.accent {
+             font-weight: normal;
         }
 
         .tingg-machine {
             padding: 3rem;
             background-color: rgba(240, 165, 0, 0.1);
             border-radius: 8px;
-            margin: 3rem 0; /* Adjust margin */
-            display: grid;
-            grid-template-columns: 1fr 2fr; /* Restored 2-column */
-            gap: 2rem;
-            align-items: center;
+            margin: 3rem 0;
+            display: block; /* Changed from grid */
             position: relative;
             overflow: hidden;
+            text-align: center; /* Center text */
         }
 
         .tingg-machine::before {
@@ -383,7 +363,7 @@
             font-family: var(--mono-font);
             color: var(--accent);
             font-size: 1.5rem;
-            opacity: 0.3; /* Make it fainter */
+            opacity: 0.3;
             z-index: 0;
         }
 
@@ -395,25 +375,13 @@
             font-family: var(--mono-font);
             color: var(--accent);
             font-size: 1.5rem;
-            opacity: 0.3; /* Make it fainter */
+            opacity: 0.3;
             z-index: 0;
         }
 
-        /* === RESTORED .tingg-image styles === */
-        .tingg-image {
-            width: 100%;
-            max-width: 300px; /* Limit image size */
-            height: auto;
-            border-radius: 8px;
-            filter: sepia(20%);
-            display: block; /* Prevent extra space */
-            margin: 0 auto; /* Center if container is wider */
-            z-index: 1; /* Ensure image is above pseudo-elements */
-            position: relative;
-        }
-        /* === END RESTORED .tingg-image styles === */
+        /* Removed .tingg-image styles */
 
-        .tingg-machine > div { /* Target the text content div */
+        .tingg-machine > div {
              z-index: 1;
              position: relative;
         }
@@ -426,9 +394,9 @@
 
         .players-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Slightly wider cards */
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 2rem;
-            margin-top: 2rem; /* Add space below intro text */
+            margin-top: 2rem;
         }
 
         .player-card {
@@ -440,8 +408,8 @@
             position: relative;
             overflow: hidden;
             transition: transform 0.3s;
-            display: flex; /* Use flexbox for better content alignment */
-            flex-direction: column; /* Stack content vertically */
+            display: flex;
+            flex-direction: column;
         }
 
         .player-card:hover {
@@ -469,17 +437,17 @@
             font-size: 0.9rem;
             opacity: 0.7;
             margin-bottom: 1rem;
-            font-style: italic; /* Add italic style */
+            font-style: italic;
         }
 
-        .player-card p:last-child { /* Remove bottom margin from last paragraph */
+        .player-card p:last-child {
             margin-bottom: 0;
         }
 
 
         /* Sound Section */
         .sound-section {
-            background-color: #111; /* Slightly lighter dark */
+            background-color: #111;
             position: relative;
             color: var(--light);
         }
@@ -493,7 +461,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 2rem; /* Space below heading */
+            margin-top: 2rem;
         }
 
         .sound-card {
@@ -502,7 +470,7 @@
             border-radius: 8px;
             backdrop-filter: blur(5px);
             transition: transform 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Add subtle border */
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .sound-card:hover {
@@ -512,27 +480,27 @@
         .sound-card h3 {
             color: var(--accent);
             margin-bottom: 1rem;
-            font-family: var(--heading-font); /* Use heading font */
+            font-family: var(--heading-font);
         }
 
         .song-list {
             list-style: none;
             margin-top: 1rem;
-            padding-left: 0; /* Remove default padding */
+            padding-left: 0;
         }
 
         .song-list li {
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
-            font-size: 0.95rem; /* Slightly adjust font size */
+            font-size: 0.95rem;
         }
 
         .song-list li::before {
             content: '♪';
-            margin-right: 0.75rem; /* Increase spacing */
+            margin-right: 0.75rem;
             color: var(--accent);
-            font-size: 1.1em; /* Make icon slightly larger */
+            font-size: 1.1em;
         }
 
         /* Author Section */
@@ -542,29 +510,11 @@
         }
 
         .author-grid {
-            display: grid;
-            grid-template-columns: 300px 1fr; /* Restored 2-column */
-            gap: 3rem;
-            align-items: center;
+            display: block; /* Changed from grid */
+            text-align: center; /* Center content */
         }
 
-        /* === RESTORED .author-image styles === */
-        .author-image {
-            width: 100%;
-            max-width: 300px; /* Ensure it doesn't exceed column width */
-            height: auto;
-            border-radius: 50%;
-            filter: grayscale(50%);
-            transition: filter 0.3s;
-            border: 5px solid var(--accent);
-            display: block; /* Prevent extra space */
-        }
-
-        .author-image:hover {
-            filter: grayscale(0%);
-        }
-        /* === END RESTORED .author-image styles === */
-
+        /* Removed .author-image styles */
 
         .dedication {
             font-style: italic;
@@ -574,82 +524,26 @@
             padding: 1rem 2rem;
             border: 1px solid var(--accent);
             border-radius: 4px;
-            background-color: rgba(240, 165, 0, 0.1); /* Subtle background */
+            background-color: rgba(240, 165, 0, 0.1);
         }
 
         /* Gallery Section */
         .gallery-section {
             background-color: var(--light);
             color: var(--dark);
-            padding-bottom: 10rem; /* Ensure enough space for footer */
+            padding-bottom: 10rem;
         }
 
-        /* === RESTORED .gallery-masonry styles === */
+        /* Removed gallery styles */
         .gallery-masonry {
-            column-count: 3;
-            column-gap: 1.5rem; /* Adjust gap */
-             margin-top: 2rem; /* Space below heading */
+             margin-top: 2rem;
         }
-        /* === END RESTORED .gallery-masonry styles === */
-
-
-        /* === RESTORED .gallery-item styles === */
-        .gallery-item {
-            display: inline-block; /* Changed from block for masonry */
-            margin-bottom: 1.5rem; /* Adjust gap */
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            transition: transform 0.3s;
-            break-inside: avoid; /* Prevent items breaking across columns */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Add subtle shadow */
-        }
-
-        .gallery-item:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2); /* Enhance shadow on hover */
-        }
-
-        .gallery-image {
-            width: 100%;
-            height: auto;
-            display: block;
-            filter: grayscale(50%);
-            transition: filter 0.5s;
-        }
-
-        .gallery-item:hover .gallery-image {
-            filter: grayscale(0%);
-        }
-
-        .gallery-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            color: var(--light);
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 0.9rem;
-            transform: translateY(10px); /* Start slightly lower */
-            transition: opacity 0.3s, transform 0.3s;
-        }
-
-        .gallery-item:hover .gallery-caption {
-            opacity: 1;
-            transform: translateY(0); /* Move to final position */
-        }
-         /* === END RESTORED .gallery-item styles === */
-
 
         /* Footer */
         footer {
             background-color: var(--dark);
             color: var(--light);
-            padding: 4rem 2rem; /* Use content padding */
+            padding: 4rem 2rem;
             position: relative;
         }
 
@@ -660,15 +554,15 @@
              justify-content: space-between;
              align-items: center;
              flex-wrap: wrap;
-             gap: 1rem; /* Add gap for wrapped items */
+             gap: 1rem;
         }
 
         .footer-logo {
             font-family: var(--mono-font);
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            flex-basis: 100%; /* Take full width on small screens */
-            text-align: center; /* Center logo on small screens */
+            flex-basis: 100%;
+            text-align: center;
         }
 
         .footer-nav {
@@ -676,723 +570,17 @@
             display: flex;
             flex-wrap: wrap;
             gap: 1.5rem;
-            padding-left: 0; /* Remove default padding */
-            margin: 0; /* Remove default margin */
-            justify-content: center; /* Center nav items */
-            flex-basis: 100%; /* Take full width initially */
-        }
-
-        .footer-link {
-            color: var(--light);
-            text-decoration: none;
-            transition: color 0.3s;
-            font-size: 0.9rem; /* Slightly smaller */
-        }
-
-        .footer-link:hover {
-            color: var(--accent);
-        }
-
-        .copyright {
-            width: 100%;
-            text-align: center;
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.9rem;
-            opacity: 0.7;
-        }
-
-        /* Responsive styles */
-     <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spoken Jazz & the tingg* Machine</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <!-- Iconify for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/iconify/2.0.0/iconify.min.js"></script>
-    <style>
-        :root {
-            --dark: #0f0f0f;
-            --light: #f7f7f7;
-            --accent: #f0a500;
-            --accent-dark: #cf7500;
-            --gray: #333333;
-            --light-gray: #e0e0e0;
-
-            --body-font: 'Work Sans', sans-serif;
-            --heading-font: 'Playfair Display', serif;
-            --mono-font: 'Courier Prime', monospace;
-        }
-
-        * {
+            padding-left: 0;
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-           scroll-behavior: smooth; /* Add smooth scrolling for anchor links */
-        }
-
-        body {
-            font-family: var(--body-font);
-            background-color: var(--dark);
-            color: var(--light);
-            line-height: 1.6;
-            font-weight: 300;
-            overflow-x: hidden;
-        }
-
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--dark);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent);
-        }
-
-        /* Typography */
-        h1, h2, h3, h4 {
-            font-family: var(--heading-font);
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-        }
-
-        h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: 2rem;
-        }
-
-        h3 {
-            font-size: clamp(1.5rem, 3vw, 2.5rem);
-            margin-bottom: 1rem;
-        }
-
-        p {
-            margin-bottom: 1.5rem;
-            font-size: clamp(1rem, 2vw, 1.2rem);
-        }
-
-        .mono {
-            font-family: var(--mono-font);
-        }
-
-        .accent {
-            color: var(--accent);
-        }
-
-        /* Layout */
-        .container {
-            max-width: 100%;
-            padding: 0;
-        }
-
-        section {
-            padding: 5rem 0;
-            position: relative;
-        }
-
-        .content-wrapper {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            position: relative;
-            padding: 0;
-            background-color: var(--dark);
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* === ADD YOUR HERO BACKGROUND IMAGE HERE === */
-            /* background: url('images/hero-background.jpg') no-repeat center center/cover; */
-            background-color: #333; /* Fallback color */
-            opacity: 0.4;
-            filter: grayscale(50%);
-            z-index: 0;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            max-width: 800px;
-            padding: 0 2rem;
-        }
-
-        .hero-title {
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .tingg {
-            position: relative;
-            display: inline-block;
-        }
-
-        .tingg::after {
-            content: "*";
-            position: absolute;
-            top: 0;
-            right: -1rem;
-            color: var(--accent);
-        }
-
-        .tagline {
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-            font-family: var(--heading-font);
-            font-style: italic;
-        }
-
-        .scroll-prompt {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            color: var(--accent);
-            opacity: 0.8;
-            transition: opacity 0.3s;
-            z-index: 1;
-            text-decoration: none; /* Make it clear it's a link */
-        }
-
-        .scroll-prompt:hover {
-            opacity: 1;
-        }
-
-        .scroll-prompt span {
-            font-size: 0.8rem;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Navigation */
-        .nav-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            transition: background-color 0.3s, box-shadow 0.3s;
-            padding: 1rem 0;
-        }
-
-        .nav-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .nav-scrolled {
-            background-color: rgba(15, 15, 15, 0.95);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .site-logo {
-            font-family: var(--mono-font);
-            font-size: 1.2rem;
-            color: var(--light);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-            margin: 0; /* Reset default ul margin */
-        }
-
-        .nav-link {
-            color: var(--light);
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 400;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--accent);
-            transition: width 0.3s;
-        }
-
-        .nav-link:hover {
-            color: var(--accent);
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--light);
-            font-size: 1.8rem; /* Slightly larger */
-            cursor: pointer;
-            padding: 0.5rem; /* Add some padding for easier clicking */
-        }
-
-        /* Story Section */
-        .story-section {
-            background-color: var(--light);
-            color: var(--dark);
-        }
-
-        .story-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Restored 2-column layout */
-            gap: 3rem;
-            align-items: center;
-            margin-bottom: 3rem; /* Space before the next block of text */
-        }
-
-        /* === RESTORED .story-image styles === */
-        .story-image {
-            width: 100%;
-            height: auto; /* Allow aspect ratio */
-            max-height: 500px; /* Limit height */
-            object-fit: cover;
-            border-radius: 5px;
-            filter: grayscale(30%);
-            transition: filter 0.5s;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            display: block; /* Prevent extra space below image */
-        }
-
-        .story-image:hover {
-            filter: grayscale(0%);
-        }
-        /* === END RESTORED .story-image styles === */
-
-
-        blockquote {
-            font-family: var(--heading-font);
-            font-style: italic;
-            font-size: clamp(1.3rem, 3vw, 1.5rem); /* Slightly adjust size */
-            padding-left: 2rem;
-            position: relative;
-            margin: 2rem 0;
-            line-height: 1.4;
-            color: #555; /* Slightly darker text for blockquote */
-        }
-
-        blockquote::before {
-            content: '"'; /* Use standard double quote */
-            font-family: var(--heading-font);
-            position: absolute;
-            left: -0.5rem; /* Adjust position */
-            top: -1.5rem; /* Adjust position */
-            font-size: 6rem; /* Larger quote mark */
-            color: var(--accent);
-            opacity: 0.3; /* Slightly less opaque */
-            line-height: 1;
-        }
-        blockquote span.accent { /* Style the accent text within blockquote */
-             font-weight: bold;
-        }
-
-
-        /* World Section */
-        .world-section {
-            background-color: var(--dark);
-            color: var(--light);
-        }
-
-        .world-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem; /* Slightly reduce gap */
-        }
-
-        .location-card {
-            padding: 2rem;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            margin-bottom: 1rem; /* Reduce margin */
-            border-left: 4px solid var(--accent);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .location-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-        .location-card h3 span.accent { /* Style accent within location card */
-             font-weight: normal; /* Keep heading style */
-        }
-
-        .tingg-machine {
-            padding: 3rem;
-            background-color: rgba(240, 165, 0, 0.1);
-            border-radius: 8px;
-            margin: 3rem 0; /* Adjust margin */
-            display: grid;
-            grid-template-columns: 1fr 2fr; /* Restored 2-column */
-            gap: 2rem;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tingg-machine::before {
-            content: '*tingg*';
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-family: var(--mono-font);
-            color: var(--accent);
-            font-size: 1.5rem;
-            opacity: 0.3; /* Make it fainter */
-            z-index: 0;
-        }
-
-        .tingg-machine::after {
-            content: '*tingg*';
-            position: absolute;
-            bottom: 1rem;
-            left: 1rem;
-            font-family: var(--mono-font);
-            color: var(--accent);
-            font-size: 1.5rem;
-            opacity: 0.3; /* Make it fainter */
-            z-index: 0;
-        }
-
-        /* === RESTORED .tingg-image styles === */
-        .tingg-image {
-            width: 100%;
-            max-width: 300px; /* Limit image size */
-            height: auto;
-            border-radius: 8px;
-            filter: sepia(20%);
-            display: block; /* Prevent extra space */
-            margin: 0 auto; /* Center if container is wider */
-            z-index: 1; /* Ensure image is above pseudo-elements */
-            position: relative;
-        }
-        /* === END RESTORED .tingg-image styles === */
-
-        .tingg-machine > div { /* Target the text content div */
-             z-index: 1;
-             position: relative;
-        }
-
-        /* Players Section */
-        .players-section {
-            background-color: var(--light);
-            color: var(--dark);
-        }
-
-        .players-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Slightly wider cards */
-            gap: 2rem;
-            margin-top: 2rem; /* Add space below intro text */
-        }
-
-        .player-card {
-            padding: 2rem;
-            background-color: var(--dark);
-            color: var(--light);
-            border-radius: 8px;
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s;
-            display: flex; /* Use flexbox for better content alignment */
-            flex-direction: column; /* Stack content vertically */
-        }
-
-        .player-card:hover {
-            transform: translateY(-8px);
-        }
-
-        .player-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 4px;
-            width: 100%;
-            background: var(--accent);
-        }
-
-        .player-name {
-            font-family: var(--mono-font);
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-            font-size: 1.2rem;
-        }
-
-        .player-role {
-            font-size: 0.9rem;
-            opacity: 0.7;
-            margin-bottom: 1rem;
-            font-style: italic; /* Add italic style */
-        }
-
-        .player-card p:last-child { /* Remove bottom margin from last paragraph */
-            margin-bottom: 0;
-        }
-
-
-        /* Sound Section */
-        .sound-section {
-            background-color: #111; /* Slightly lighter dark */
-            position: relative;
-            color: var(--light);
-        }
-
-        .sound-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .sound-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem; /* Space below heading */
-        }
-
-        .sound-card {
-            padding: 2rem;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            backdrop-filter: blur(5px);
-            transition: transform 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Add subtle border */
-        }
-
-        .sound-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .sound-card h3 {
-            color: var(--accent);
-            margin-bottom: 1rem;
-            font-family: var(--heading-font); /* Use heading font */
-        }
-
-        .song-list {
-            list-style: none;
-            margin-top: 1rem;
-            padding-left: 0; /* Remove default padding */
-        }
-
-        .song-list li {
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            font-size: 0.95rem; /* Slightly adjust font size */
-        }
-
-        .song-list li::before {
-            content: '♪';
-            margin-right: 0.75rem; /* Increase spacing */
-            color: var(--accent);
-            font-size: 1.1em; /* Make icon slightly larger */
-        }
-
-        /* Author Section */
-        .author-section {
-            background-color: var(--dark);
-            color: var(--light);
-        }
-
-        .author-grid {
-            display: grid;
-            grid-template-columns: 300px 1fr; /* Restored 2-column */
-            gap: 3rem;
-            align-items: center;
-        }
-
-        /* === RESTORED .author-image styles === */
-        .author-image {
-            width: 100%;
-            max-width: 300px; /* Ensure it doesn't exceed column width */
-            height: auto;
-            border-radius: 50%;
-            filter: grayscale(50%);
-            transition: filter 0.3s;
-            border: 5px solid var(--accent);
-            display: block; /* Prevent extra space */
-        }
-
-        .author-image:hover {
-            filter: grayscale(0%);
-        }
-        /* === END RESTORED .author-image styles === */
-
-
-        .dedication {
-            font-style: italic;
-            color: var(--accent);
-            margin-top: 2rem;
-            display: inline-block;
-            padding: 1rem 2rem;
-            border: 1px solid var(--accent);
-            border-radius: 4px;
-            background-color: rgba(240, 165, 0, 0.1); /* Subtle background */
-        }
-
-        /* Gallery Section */
-        .gallery-section {
-            background-color: var(--light);
-            color: var(--dark);
-            padding-bottom: 10rem; /* Ensure enough space for footer */
-        }
-
-        /* === RESTORED .gallery-masonry styles === */
-        .gallery-masonry {
-            column-count: 3;
-            column-gap: 1.5rem; /* Adjust gap */
-             margin-top: 2rem; /* Space below heading */
-        }
-        /* === END RESTORED .gallery-masonry styles === */
-
-
-        /* === RESTORED .gallery-item styles === */
-        .gallery-item {
-            display: inline-block; /* Changed from block for masonry */
-            margin-bottom: 1.5rem; /* Adjust gap */
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            transition: transform 0.3s;
-            break-inside: avoid; /* Prevent items breaking across columns */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Add subtle shadow */
-        }
-
-        .gallery-item:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2); /* Enhance shadow on hover */
-        }
-
-        .gallery-image {
-            width: 100%;
-            height: auto;
-            display: block;
-            filter: grayscale(50%);
-            transition: filter 0.5s;
-        }
-
-        .gallery-item:hover .gallery-image {
-            filter: grayscale(0%);
-        }
-
-        .gallery-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            color: var(--light);
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 0.9rem;
-            transform: translateY(10px); /* Start slightly lower */
-            transition: opacity 0.3s, transform 0.3s;
-        }
-
-        .gallery-item:hover .gallery-caption {
-            opacity: 1;
-            transform: translateY(0); /* Move to final position */
-        }
-         /* === END RESTORED .gallery-item styles === */
-
-
-        /* Footer */
-        footer {
-            background-color: var(--dark);
-            color: var(--light);
-            padding: 4rem 2rem; /* Use content padding */
-            position: relative;
-        }
-
-        .footer-content {
-             max-width: 1200px;
-             margin: 0 auto;
-             display: flex;
-             justify-content: space-between;
-             align-items: center;
-             flex-wrap: wrap;
-             gap: 1rem; /* Add gap for wrapped items */
-        }
-
-        .footer-logo {
-            font-family: var(--mono-font);
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            flex-basis: 100%; /* Take full width on small screens */
-            text-align: center; /* Center logo on small screens */
-        }
-
-        .footer-nav {
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            padding-left: 0; /* Remove default padding */
-            margin: 0; /* Remove default margin */
-            justify-content: center; /* Center nav items */
-            flex-basis: 100%; /* Take full width initially */
+            flex-basis: 100%;
         }
 
         .footer-link {
             color: var(--light);
             text-decoration: none;
             transition: color 0.3s;
-            font-size: 0.9rem; /* Slightly smaller */
+            font-size: 0.9rem;
         }
 
         .footer-link:hover {
@@ -1410,41 +598,23 @@
         }
 
         /* Responsive styles */
-        @media (min-width: 768px) { /* Adjust footer layout on larger screens */
+        @media (min-width: 768px) {
              .footer-logo {
-                 flex-basis: auto; /* Allow logo and nav side-by-side */
+                 flex-basis: auto;
                  text-align: left;
              }
              .footer-nav {
                  flex-basis: auto;
-                 justify-content: flex-end; /* Align nav to the right */
+                 justify-content: flex-end;
              }
         }
 
 
         @media (max-width: 1024px) {
-            .story-grid, .author-grid { /* Restored */
-                grid-template-columns: 1fr;
-                gap: 2rem; /* Reduce gap */
-            }
-             .author-grid {
-                 text-align: center; /* Center text content */
-             }
-             .author-image { /* Restored */
-                 margin: 0 auto 2rem auto; /* Center image */
-             }
-
-            .gallery-masonry { /* Restored */
-                column-count: 2;
-            }
-
-            .tingg-machine {
-                grid-template-columns: 1fr; /* Restored */
-                padding: 2rem;
-                text-align: center;
-            }
-             .tingg-image { /* Restored */
-                 margin-bottom: 1.5rem;
+             /* Removed specific adjustments for image layouts */
+             .tingg-machine {
+                 padding: 2rem;
+                 text-align: center;
              }
         }
 
@@ -1459,61 +629,45 @@
             .nav-menu {
                 position: fixed;
                 top: 0;
-                right: -100%; /* Start off-screen */
-                width: 80%; /* Adjust width */
-                max-width: 300px; /* Max width */
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
                 height: 100vh;
                 background-color: var(--dark);
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                transition: right 0.4s ease-in-out; /* Smoother transition */
+                transition: right 0.4s ease-in-out;
                 z-index: 999;
-                padding-top: 4rem; /* Space for close button potentially */
-                gap: 2.5rem; /* Increase gap for links */
+                padding-top: 4rem;
+                gap: 2.5rem;
             }
 
             .nav-menu.active {
                 right: 0;
-                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3); /* Darker shadow */
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
             }
 
              .nav-link {
-                 font-size: 1.2rem; /* Larger font size for mobile */
+                 font-size: 1.2rem;
              }
 
             .mobile-menu-btn {
                 display: block;
-                z-index: 1001; /* Ensure it's above the menu */
-                position: relative; /* Needed for z-index */
+                z-index: 1001;
+                position: relative;
             }
 
-             /* Style the close button */
              .mobile-menu-btn .iconify[data-icon="ci:close-big"] {
-                 color: var(--accent); /* Use accent color for close */
+                 color: var(--accent);
              }
 
-            .gallery-masonry { /* Restored */
-                column-count: 1;
-            }
+            /* Removed gallery/audio adjustments */
 
-            /* Removed audio player adjustments */
-
-            .story-grid > div:last-child { /* This used to target the image container, ensure it's below text */
-                 order: 1; /* Place image below text on mobile */
-                 margin-top: 2rem; /* Add space above image on mobile */
+             .story-grid > div:last-child {
+                 order: 0; /* Reset order */
+                 margin-top: 0; /* Reset margin */
              }
-
-             .tingg-machine { /* Restored */
-                 grid-template-columns: 1fr; /* Stack */
-             }
-
-             .author-grid { /* Restored */
-                 grid-template-columns: 1fr; /* Stack */
-             }
-              .author-image { /* Restored */
-                  max-width: 200px; /* Smaller author image on mobile */
-              }
         }
 
         /* Animations */
@@ -1525,7 +679,7 @@
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Use ease-out */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
 
         .fade-in.visible {
@@ -1545,7 +699,7 @@
             justify-content: center;
             align-items: center;
             z-index: 2000;
-            transition: opacity 0.5s ease-out 0.3s, visibility 0.5s ease-out 0.3s; /* Add delay */
+            transition: opacity 0.5s ease-out 0.3s, visibility 0.5s ease-out 0.3s;
         }
 
         .loader.hidden {
@@ -1556,7 +710,7 @@
         .typewriter {
             font-family: var(--mono-font);
             color: var(--accent);
-            font-size: clamp(1.5rem, 5vw, 2rem); /* Responsive font size */
+            font-size: clamp(1.5rem, 5vw, 2rem);
             position: relative;
             width: fit-content;
         }
@@ -1564,7 +718,7 @@
         .typewriter::after {
             content: '|';
             position: absolute;
-            right: -8px; /* Adjust cursor position */
+            right: -8px;
             bottom: 0;
             animation: blink 0.7s infinite;
         }
@@ -1626,18 +780,13 @@
             <h2 class="fade-in">The Story</h2>
             <div class="story-grid">
                 <div class="fade-in">
-                    <!-- Using the revised paragraph from previous interaction -->
                     <p>In Bremerton, a Navy town painted in shades of grey, the paths of guitarist Bub Pratt and bassist Andrew converge at Olympic College. Bub, a scholarship student living a transient life fueled by poetry and improvisation, contrasts with the meticulous, focused Andrew, newly arrived and seeking structure. Despite their differences, their shared passion for jazz forges an unlikely bond, positioning them as anchors for a burgeoning creative scene.</p>
 
                     <blockquote>"If he plays more, you play less." <span class="accent">- Miles Davis</span></blockquote>
 
                     <p>Amidst jam sessions fueled by Pizneon Greens and bootleg coffee, open mics at the divey Old Town Tavern, and the constant rhythm of Bub's vintage Remington typewriter – the *tingg* Machine – a community sparks.</p>
                 </div>
-                <!-- === IMAGE RESTORED === -->
-                <div class="fade-in">
-                    <img src="images/story-mood.jpg" alt="Atmospheric image representing Bremerton or the music scene" class="story-image">
-                </div>
-                <!-- === END IMAGE RESTORED === -->
+                <!-- Image Removed -->
             </div>
             <div class="fade-in"> <!-- Second part of the story text -->
                  <p>They navigate disastrous gigs, complicated relationships (divorces, unexpected pregnancies, the magnetic pull of new connections like Mary and Karen), black market dealings orchestrated by the enigmatic Bill Lawson, and the raw, messy process of finding their artistic voices against a blue-collar backdrop.</p>
@@ -1670,9 +819,7 @@
                 </div>
 
                 <div class="tingg-machine fade-in">
-                    <!-- === IMAGE RESTORED === -->
-                    <img src="images/tingg-typewriter.jpg" alt="A vintage Remington portable typewriter, the tingg* Machine" class="tingg-image">
-                    <!-- === END IMAGE RESTORED === -->
+                    <!-- Image Removed -->
                     <div>
                         <h3>The <span class="accent">*tingg*</span> Machine</h3>
                         <p>Central to Bub's world is his late 40's Remington portable typewriter, the <span class="mono">tingg* Machine</span>. It's not just a tool for his zines; it's a percussion instrument, a character, the relentless rhythm section for his spoken jazz dreams.</p>
@@ -1795,11 +942,7 @@
         <div class="content-wrapper">
              <h2 class="fade-in">The Author: <span class="accent">[Your Name/Pen Name]</span></h2>
             <div class="author-grid">
-                <!-- === IMAGE RESTORED === -->
-                <div class="fade-in">
-                    <img src="images/author-photo.jpg" alt="Portrait photo of [Your Name/Pen Name]" class="author-image">
-                </div>
-                <!-- === END IMAGE RESTORED === -->
+                <!-- Image Removed -->
                 <div class="fade-in">
                     <p>Brief bio paragraph about the author. Mention connection to the setting or themes if applicable. Talk about writing style or inspiration.</p>
                     <p>Another paragraph perhaps, elaborating on the project or personal connection to jazz, poetry, or the Pacific Northwest.</p>
@@ -1816,34 +959,8 @@
             <p class="fade-in">A collection of images capturing the mood, setting, and spirit of Spoken Jazz & the tingg* Machine.</p>
 
             <div class="gallery-masonry">
-                 <!-- === GALLERY ITEMS RESTORED === -->
-                 <!-- Add gallery items - Replace placeholders -->
-                 <div class="gallery-item fade-in">
-                     <img src="images/gallery-image-1.jpg" alt="Gallery image description 1" class="gallery-image">
-                     <div class="gallery-caption">Rainy Bremerton Street</div>
-                 </div>
-                 <div class="gallery-item fade-in">
-                    <img src="images/gallery-image-2.jpg" alt="Gallery image description 2" class="gallery-image">
-                    <div class="gallery-caption">Close up of a vintage typewriter key</div>
-                 </div>
-                 <div class="gallery-item fade-in">
-                    <img src="images/gallery-image-3.jpg" alt="Gallery image description 3" class="gallery-image">
-                    <div class="gallery-caption">Smoky interior of a jazz club</div>
-                 </div>
-                 <div class="gallery-item fade-in">
-                    <img src="images/gallery-image-4.jpg" alt="Gallery image description 4" class="gallery-image">
-                    <div class="gallery-caption">Puget Sound ferry</div>
-                 </div>
-                 <div class="gallery-item fade-in">
-                    <img src="images/gallery-image-5.jpg" alt="Gallery image description 5" class="gallery-image">
-                    <div class="gallery-caption">Musician playing bass</div>
-                 </div>
-                 <div class="gallery-item fade-in">
-                     <img src="images/gallery-image-6.jpg" alt="Gallery image description 6" class="gallery-image">
-                     <div class="gallery-caption">Old Town Tavern sign at night</div>
-                 </div>
-                 <!-- Add more items as needed -->
-                 <!-- === END GALLERY ITEMS RESTORED === -->
+                 <!-- Gallery items and images removed -->
+                 <p class="fade-in"><i>(Image gallery content will be added here later.)</i></p>
             </div>
         </div>
     </section>
@@ -1876,10 +993,7 @@
         window.addEventListener('load', () => {
             const loader = document.querySelector('.loader');
             if (loader) {
-                // Wait a tiny bit after load if needed, e.g., 50ms, then hide
-                // setTimeout(() => {
-                     loader.classList.add('hidden');
-                // }, 50);
+                loader.classList.add('hidden');
             }
             // Set current year in footer
             document.getElementById('current-year').textContent = new Date().getFullYear();
@@ -1892,7 +1006,7 @@
         if (mobileMenuBtn && navMenu) {
             mobileMenuBtn.addEventListener('click', () => {
                 const isExpanded = navMenu.classList.toggle('active');
-                mobileMenuBtn.setAttribute('aria-expanded', isExpanded); // ARIA attribute
+                mobileMenuBtn.setAttribute('aria-expanded', isExpanded);
                 const icon = mobileMenuBtn.querySelector('.iconify');
                 if (isExpanded) {
                     icon.setAttribute('data-icon', 'ci:close-big');
@@ -1912,7 +1026,7 @@
                     }
                 });
             });
-             // Close menu if clicking outside of it (optional)
+             // Close menu if clicking outside of it
              document.addEventListener('click', (event) => {
                  if (navMenu.classList.contains('active') && !navMenu.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
                      navMenu.classList.remove('active');
@@ -1924,60 +1038,45 @@
 
         // --- Scroll-based Fade-in Animation ---
         const fadeInElements = document.querySelectorAll('.fade-in');
-        // Adjust rootMargin to trigger animation slightly earlier or later
-        // Negative value means trigger before it enters viewport, positive means after
         const observerOptions = {
-            root: null, // relative to the viewport
-            rootMargin: '0px 0px -50px 0px', // Trigger when element is 50px from bottom edge
-            threshold: 0 // Trigger as soon as any part enters threshold area
+            root: null,
+            rootMargin: '0px 0px -50px 0px',
+            threshold: 0
         };
 
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    // Stop observing once visible to prevent re-triggering
                     observer.unobserve(entry.target);
                 }
-                // Optional: remove 'visible' class if element scrolls out of view
-                // else {
-                //     entry.target.classList.remove('visible');
-                // }
             });
         }, observerOptions);
 
         fadeInElements.forEach(el => {
-            // Check if element is already visible on load (e.g., hero content)
-            // This requires getting element position relative to viewport
             const rect = el.getBoundingClientRect();
             if (rect.top < window.innerHeight && rect.bottom >= 0) {
-                 el.classList.add('visible'); // Make immediately visible if already in view
+                 el.classList.add('visible');
             } else {
-                 observer.observe(el); // Otherwise, observe for scrolling
+                 observer.observe(el);
             }
         });
 
 
         // --- Navbar Scroll Effect ---
         const navContainer = document.querySelector('.nav-container');
-        let lastScrollY = window.scrollY; // Track scroll position
+        let lastScrollY = window.scrollY;
 
         window.addEventListener('scroll', () => {
              const currentScrollY = window.scrollY;
-            if (currentScrollY > 50) { // Add scrolled class after scrolling 50px
+            if (currentScrollY > 50) {
                 navContainer.classList.add('nav-scrolled');
             } else {
                 navContainer.classList.remove('nav-scrolled');
             }
-             // Optional: Hide nav on scroll down, show on scroll up
-             // if (currentScrollY > lastScrollY && currentScrollY > 100) { // Scrolling down
-             //      navContainer.style.top = '-100px'; // Adjust based on nav height
-             // } else { // Scrolling up or near top
-             //      navContainer.style.top = '0';
-             // }
-             // lastScrollY = currentScrollY; // Update last scroll position
+             // lastScrollY = currentScrollY;
 
-        }, { passive: true }); // Improve scroll performance
+        }, { passive: true });
 
     </script>
     <!-- End of added script block -->
