@@ -50,7 +50,6 @@
             perspective: 1500px;
             border: 1px solid #222;
             box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
-            /* REMOVED overflow: hidden; which was likely causing the cutoff */
         }
 
         /* Individual "Paper" Styling */
@@ -83,7 +82,6 @@
                 0% 2%, 2% 0%, 98% 1%, 100% 3%,
                 99% 98%, 97% 100%, 3% 99%, 1% 97%
             );
-            /* Ensure transforms happen on GPU for potentially smoother animations */
             will-change: transform, opacity;
         }
 
@@ -120,9 +118,23 @@
             display: inline-block;
             padding-bottom: 0.3rem;
         }
-        .paper-page h1 { font-size: clamp(1.8rem, 5vw, 2.5rem); color: var(--ink); }
-        .paper-page h2 { font-size: clamp(1.4rem, 4vw, 1.8rem); color: #444; }
+        /* Specific Heading Sizes */
+        .paper-page h1 { font-size: clamp(1.8rem, 5vw, 2.5rem); color: var(--ink); } /* Kept for other pages */
+        .paper-page h2 { font-size: clamp(1.4rem, 4vw, 1.8rem); color: #444; } /* Base H2 style */
         .paper-page h3 { font-size: clamp(1.1rem, 3.5vw, 1.4rem); color: #666; border-bottom: none; font-style: italic;}
+
+         /* Style for the combined title on the hero page */
+         .combined-title {
+             font-size: clamp(1.8rem, 5vw, 2.5rem); /* Use larger size like old H1 */
+             color: var(--ink); /* Base color */
+             margin-bottom: 1.2rem;
+             border-bottom: 1px dashed var(--ink);
+             display: inline-block;
+             padding-bottom: 0.3rem;
+             line-height: 1.2; /* Adjust if needed */
+             font-weight: 700; /* Ensure bold */
+             text-transform: uppercase; /* Match previous style */
+        }
 
         .paper-page p {
             font-size: clamp(0.9rem, 2.5vw, 1rem);
@@ -145,18 +157,23 @@
              pointer-events: none;
          }
 
-        /* Glitchy Title Effect */
-        .glitch-title {
+        /* Inline glitch effect for the span */
+        .glitch-inline {
+            font-size: inherit;
+            font-weight: inherit;
+            text-transform: inherit;
+            letter-spacing: inherit; /* Adjust if specific letter spacing is desired for TINGG* */
+
             position: relative;
             color: var(--accent-glitch1);
-            font-size: clamp(2.5rem, 7vw, 3rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
             text-shadow: -1px -1px 0 var(--accent-glitch2), 1px 1px 0 var(--accent-glitch1);
             animation: glitch-anim 0.1s infinite linear alternate-reverse;
+
+            display: inline-block; /* Important for proper flow and effect application */
+            vertical-align: baseline;
         }
 
+        /* Keep the Keyframes animation */
         @keyframes glitch-anim {
             0% { transform: translate(0); }
             20% { transform: translate(-2px, 2px); text-shadow: -1px -1px 0 var(--accent-glitch2), 3px 3px 0 var(--accent-glitch1); }
@@ -238,8 +255,9 @@
     <div class="desk-canvas">
         <!-- Pages -->
         <div class="paper-page" id="page-hero" data-order="1">
-            <h1 class="glitch-title">TINGG*</h1>
-            <h2>Spoken Jazz & the Machine</h2>
+             <!-- MODIFIED: Combined H1 and H2 into a single H2 with an inline span for glitch effect -->
+            <h2 class="combined-title">Spoken Jazz & the <span class="glitch-inline">TINGG*</span> Machine</h2>
+
             <p>Bremerton. Navy grey. Jazz heat. Poetry grit. An accidental renaissance.</p>
             <p style="font-size: 0.8em; color: #555;">(Click pages to bring forward / Use arrows below)</p>
         </div>
@@ -305,6 +323,7 @@
     </div>
 
     <script>
+        // Javascript remains the same as the previous version
         document.addEventListener('DOMContentLoaded', () => {
             const pages = Array.from(document.querySelectorAll('.paper-page'));
             const canvas = document.querySelector('.desk-canvas');
@@ -330,13 +349,11 @@
                     let zIndex = totalPages - Math.abs(diff);
 
                     if (index === activeIndex) {
-                        // Active page: Let CSS handle the transform via the .active class
                         page.classList.add('active');
-                        page.style.transform = ''; // Clear any inline transform
+                        page.style.transform = '';
                         page.style.opacity = 1;
                         page.style.zIndex = 100;
                     } else {
-                        // Non-active pages: Apply calculated inline styles
                         if (diff < 0) {
                             page.classList.add('hidden-behind');
                             rotation = Math.random() * -6 - 3;
@@ -344,11 +361,7 @@
                             translateY = -50 + Math.random() * 10 - 5;
                             scale = 0.85 - Math.abs(diff) * 0.03;
                             opacity = 0.5 - Math.abs(diff) * 0.1;
-                        } else { // diff > 0
-                            // Note: .hidden-front class applies a transform in CSS.
-                            // If you want JS to control this state entirely, remove the transform from .hidden-front CSS
-                            // For now, we apply JS transform which will override CSS if .hidden-front is added,
-                            // but let's not add .hidden-front here to avoid confusion. The JS transform handles the positioning.
+                        } else {
                             rotation = Math.random() * 6 + 3;
                             translateX = -50 + Math.random() * 10 + 5;
                             translateY = -50 + Math.random() * 10 - 5;
@@ -358,27 +371,20 @@
                         page.style.transform = `translate(${translateX}%, ${translateY}%) rotate(${rotation}deg) scale(${scale})`;
                         page.style.opacity = Math.max(0.2, opacity);
                         page.style.zIndex = zIndex;
-                        // Ensure pointer events are disabled for non-active pages for reliability
                         page.style.pointerEvents = 'none';
                     }
 
-                    // Re-enable pointer events only for the active page IF it wasn't clicked
-                    // (Click handler below will handle bringing to front)
                     if (index === activeIndex) {
-                       page.style.pointerEvents = 'auto'; // Make sure active page is clickable/scrollable
-                       // Add cursor styles back explicitly if needed, although .active class should handle this
+                       page.style.pointerEvents = 'auto';
                        page.style.cursor = 'default';
                     } else {
-                       page.style.cursor = 'pointer'; // Indicate other pages can be clicked (JS handles it)
+                       page.style.cursor = 'pointer';
                     }
 
-
-                    // Handle click to bring page to front
                     page.removeEventListener('click', handlePageClick);
                     page.addEventListener('click', handlePageClick);
                 });
 
-                // Update button states based on order
                 const activePage = pages[activeIndex];
                 const currentOrder = parseInt(activePage?.dataset.order || 0);
                 const orders = pages.map(p => parseInt(p.dataset.order || p.dataset.internalIndex));
@@ -390,7 +396,6 @@
             }
 
             function handlePageClick(event) {
-                 // Only trigger if the clicked page is NOT already active
                  if (!event.currentTarget.classList.contains('active')) {
                     const clickedIndex = pages.findIndex(p => p === event.currentTarget);
                     if (clickedIndex !== -1) {
@@ -436,11 +441,9 @@
                 }
             });
 
-            // --- Loader Hiding ---
             const loader = document.querySelector('.loader');
             if (loader) setTimeout(() => loader.classList.add('hidden'), 2500);
 
-            // --- Initial setup ---
             pages.forEach((page, index) => page.dataset.originalIndex = index);
             pages.sort((a, b) => (parseInt(a.dataset.order || 0)) - (parseInt(b.dataset.order || 0)));
             activeIndex = pages.findIndex(p => parseInt(p.dataset.order || -1) === 1);
