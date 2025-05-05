@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STACK::TINGG*</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark: #050505;
+            --light: #f5f5f5;
+            --paper: #e8e4d8; /* Aged paper */
+            --ink: #1a1a1a;
+            --accent-glitch1: #ff00ff; /* Magenta */
+            --accent-glitch2: #00ffff; /* Cyan */
+            --stain: rgba(80, 50, 20, 0.15); /* Coffee stain */
+
+            --font-typewriter: 'Special Elite', monospace; /* More distressed typewriter */
+            --font-notes: 'Courier Prime', monospace;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-notes);
+            background-color: var(--dark);
+            color: var(--ink);
+            min-height: 100vh;
+            overflow: hidden; /* Keep this on body to prevent full page scroll */
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%231a1a1a' fill-opacity='0.1'%3E%3Cpath fill-rule='evenodd' d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2l-2 2V0zm0 40h2l-2 2V40zm-2 2h4l-4 4V42zm8 8h2l-2 2V50zm0 40h2l-2 2V90zm-2 2h4l-4 4V92zM0 40h2l-2 2V40zm0 40h2l-2 2V80zm-2 2h4l-4 4V82zm8 8h2l-2 2V90zm0-40h2l-2 2V50zM40 0h2l-2 2V0zm-8 8h2l-2 2V8zm0 40h2l-2 2V48z'/%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* The "Desk" or Canvas Area */
+        .desk-canvas {
+            width: 95vw;
+            height: 95vh;
+            max-width: 1400px;
+            max-height: 900px;
+            position: relative;
+            perspective: 1500px;
+            border: 1px solid #222;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+            /* REMOVED overflow: hidden; which was likely causing the cutoff */
+        }
+
+        /* Individual "Paper" Styling */
+        .paper-page {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: clamp(300px, 85vw, 550px);
+            min-height: 300px;
+            max-height: 80vh;
+            padding: 1.5rem 2rem;
+            background-color: var(--paper);
+            color: var(--ink);
+            border: 1px solid #ccc;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+            transform-origin: center center;
+            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+                        opacity 0.5s ease-out,
+                        z-index 0s linear 0.3s;
+            opacity: 0.8;
+            cursor: pointer;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            font-family: var(--font-typewriter);
+            font-size: 1rem;
+            line-height: 1.7;
+            z-index: 1;
+            filter: sepia(0.1) contrast(1.1);
+            clip-path: polygon(
+                0% 2%, 2% 0%, 98% 1%, 100% 3%,
+                99% 98%, 97% 100%, 3% 99%, 1% 97%
+            );
+            /* Ensure transforms happen on GPU for potentially smoother animations */
+            will-change: transform, opacity;
+        }
+
+        .paper-page.active {
+            transform: translate(-50%, -50%) rotate(0deg) scale(1.05);
+            opacity: 1;
+            z-index: 100;
+            cursor: default;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .paper-page.hidden-behind {
+            transform: translate(-50%, -50%) rotate(-10deg) scale(0.85) translateX(-8%);
+            opacity: 0.4;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .paper-page.hidden-front {
+             transform: translate(-50%, -50%) rotate(15deg) scale(1.1) translateX(80%);
+             opacity: 0;
+             z-index: 0;
+             pointer-events: none;
+        }
+
+
+        /* Content Styling within Paper */
+        .paper-page h1, .paper-page h2, .paper-page h3 {
+            font-family: var(--font-typewriter);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1.2rem;
+            line-height: 1.1;
+            border-bottom: 1px dashed var(--ink);
+            display: inline-block;
+            padding-bottom: 0.3rem;
+        }
+        .paper-page h1 { font-size: clamp(1.8rem, 5vw, 2.5rem); color: var(--ink); }
+        .paper-page h2 { font-size: clamp(1.4rem, 4vw, 1.8rem); color: #444; }
+        .paper-page h3 { font-size: clamp(1.1rem, 3.5vw, 1.4rem); color: #666; border-bottom: none; font-style: italic;}
+
+        .paper-page p {
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .paper-page strong { color: var(--ink); background: rgba(255,0,255, 0.2); padding: 0 0.2em;}
+        .paper-page em { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent-glitch2); text-decoration-style: wavy;}
+        .paper-page code { background: none; padding: 0; font-weight: bold; font-family: inherit; }
+
+        /* Simulated Stain */
+         .paper-page::after {
+             content: '';
+             position: absolute;
+             top: 8%; right: 8%; width: 80px; height: 80px;
+             background-color: var(--stain);
+             border-radius: 50%;
+             filter: blur(15px);
+             opacity: 0.6;
+             pointer-events: none;
+         }
+
+        /* Glitchy Title Effect */
+        .glitch-title {
+            position: relative;
+            color: var(--accent-glitch1);
+            font-size: clamp(2.5rem, 7vw, 3rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: -1px -1px 0 var(--accent-glitch2), 1px 1px 0 var(--accent-glitch1);
+            animation: glitch-anim 0.1s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); text-shadow: -1px -1px 0 var(--accent-glitch2), 3px 3px 0 var(--accent-glitch1); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, 2px); text-shadow: -3px -3px 0 var(--accent-glitch2), 1px 1px 0 var(--accent-glitch1); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        /* Navigation Controls */
+        .nav-controls {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 101;
+            display: flex;
+            gap: 10px;
+            width: max-content;
+            max-width: 90%;
+        }
+        .nav-controls button {
+            font-family: var(--font-notes);
+            background-color: var(--ink);
+            color: var(--paper);
+            border: 1px solid var(--paper);
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+        .nav-controls button:hover {
+            background-color: var(--accent-glitch1);
+            color: var(--light);
+            border-color: var(--accent-glitch1);
+        }
+        .nav-controls button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Loader */
+        .loader { position: fixed; inset: 0; background-color: var(--dark); display: grid; place-items: center; z-index: 9999; transition: opacity 0.6s ease-out 0.2s, visibility 0.6s ease-out 0.2s;}
+        .loader.hidden { opacity: 0; visibility: hidden; }
+        .loader-text {
+            font-family: var(--font-typewriter);
+            font-size: 2rem;
+            color: var(--light);
+            animation: flicker 1.5s infinite alternate;
+        }
+        @keyframes flicker {
+          0%, 18%, 22%, 25%, 53%, 57%, 100% {
+            text-shadow:
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px var(--accent-glitch1),
+                0 0 30px var(--accent-glitch1),
+                0 0 40px var(--accent-glitch1),
+                0 0 55px var(--accent-glitch1),
+                0 0 75px var(--accent-glitch1);
+            opacity: 1;
+          }
+          20%, 24%, 55% {
+            text-shadow: none;
+            opacity: 0.4;
+          }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="loader">
+        <div class="loader-text">tingg*</div>
+    </div>
+
+    <div class="desk-canvas">
+        <!-- Pages -->
+        <div class="paper-page" id="page-hero" data-order="1">
+            <h1 class="glitch-title">TINGG*</h1>
+            <h2>Spoken Jazz & the Machine</h2>
+            <p>Bremerton. Navy grey. Jazz heat. Poetry grit. An accidental renaissance.</p>
+            <p style="font-size: 0.8em; color: #555;">(Click pages to bring forward / Use arrows below)</p>
+        </div>
+
+        <div class="paper-page" id="page-story" data-order="2">
+            <h1>// THE STORY //</h1>
+            <p>Olympic College. Grey dissolves under scholarship heat. <strong>Bub Pratt</strong>—guitar, poems, transient—connects with <strong>Andrew</strong>—bass, precision, structure. An anchor drops.</p>
+            <p>Scott Street house jams bleed into Old Town Tavern mics. Fueled by <code class="mono">Pizneon Greens</code>. The Remington clicks relentless rhythm. <code class="mono">tingg*</code>. Community sparks in the static.</p>
+            <p>They navigate gig disasters, tangled relations (<em>Mary</em>, <em>Karen</em>), shadow deals (<em>Bill Lawson</em>), finding their voice against the shipyard drone—a resilience scored to a bebop rhythm.</p>
+        </div>
+
+        <div class="paper-page" id="page-quote" data-order="3">
+             <p style="font-size: 1.5rem; line-height: 1.3; text-align: center; margin-top: 2rem;"><em>"If he plays more, you play less."</em></p>
+             <p style="text-align: right; margin-top: 3rem;">– Miles</p>
+        </div>
+
+        <div class="paper-page" id="page-world" data-order="4">
+             <h1>// RAT CITY //</h1>
+             <h3>Old Town Tavern:</h3>
+             <p>Sticky floors. Pizneon Greens. Open mic heartbeat.</p>
+             <h3>Olympic College:</h3>
+             <p>Practice room scales vs. shipyard grey. Theory refuge.</p>
+             <h3>Scott Street House:</h3>
+             <p>Ground zero. Late-night jams. Chaos & camaraderie.</p>
+             <h3>Bill's Grotto:</h3>
+             <p>Speakeasy shadows. Contraband meets creativity.</p>
+        </div>
+
+         <div class="paper-page" id="page-machine" data-order="5">
+             <h1>// TINGG* MACHINE //</h1>
+             <p>Remington Portable. Late 40s.</p>
+             <p>Percussion. Character. Rhythm.</p>
+             <p><code class="mono">tingg*</code>. Clack. Bell.</p>
+             <p>Mechanical heartbeat resisting the digital fade.</p>
+             <p>Imperfect. Analog. <strong>LOUD.</strong></p>
+        </div>
+
+        <div class="paper-page" id="page-players" data-order="6">
+             <h1>// PLAYERS //</h1>
+             <p><strong>BUB</strong> [Cassandra] - Guitar/Poet/Catalyst</p>
+             <p><strong>ANDREW</strong> - Bass/Composer/Method</p>
+             <p><strong>MARSHAL</strong> [Pam] - Bass/Housemate/Jam Hub</p>
+             <p><strong>TJ</strong> - Piano/Wit</p>
+             <p><strong>BILL LAWSON</strong> - Facilitator/Enigma</p>
+             <p><strong>MARY DOYLE</strong> - Muse?/Upheaval</p>
+             <p><strong>KAREN</strong> - Observer/Lens</p>
+             <p><em>+ MANY MORE...</em></p>
+        </div>
+
+        <div class="paper-page" id="page-sound" data-order="7">
+            <h1>// SOUND //</h1>
+            <p><strong>JAZZ:</strong> Improv fire, complex changes, bebop drive, cool shadows. Influences: Parker, Monk, Miles.</p>
+            <p><strong>SPOKEN:</strong> Verse as rhythm, beat cadence, tingg* machine percussion. Echoes of Kerouac.</p>
+            <p><strong>VIBE:</strong> Late night sessions, dive bar energy, creative friction, analog soul, the Bremerton hum.</p>
+        </div>
+
+    </div> <!-- End Desk Canvas -->
+
+    <!-- Navigation Buttons -->
+    <div class="nav-controls">
+        <button id="prev-page">< PREV</button>
+        <button id="next-page">NEXT ></button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const pages = Array.from(document.querySelectorAll('.paper-page'));
+            const canvas = document.querySelector('.desk-canvas');
+            const prevButton = document.getElementById('prev-page');
+            const nextButton = document.getElementById('next-page');
+            let activeIndex = 0;
+
+            function updatePages() {
+                const totalPages = pages.length;
+                pages.forEach((page, index) => {
+                    page.classList.remove('active', 'hidden-behind', 'hidden-front');
+                    const order = parseInt(page.dataset.order || index);
+                    page.dataset.internalIndex = index;
+
+                    const activePageOrder = parseInt(pages[activeIndex]?.dataset.order || activeIndex);
+                    const diff = order - activePageOrder;
+
+                    let rotation = Math.random() * 6 - 3;
+                    let translateX = Math.random() * 6 - 3;
+                    let translateY = Math.random() * 6 - 3;
+                    let scale = 0.95;
+                    let opacity = 0.6;
+                    let zIndex = totalPages - Math.abs(diff);
+
+                    if (index === activeIndex) {
+                        // Active page: Let CSS handle the transform via the .active class
+                        page.classList.add('active');
+                        page.style.transform = ''; // Clear any inline transform
+                        page.style.opacity = 1;
+                        page.style.zIndex = 100;
+                    } else {
+                        // Non-active pages: Apply calculated inline styles
+                        if (diff < 0) {
+                            page.classList.add('hidden-behind');
+                            rotation = Math.random() * -6 - 3;
+                            translateX = -50 + Math.random() * -10 - 5;
+                            translateY = -50 + Math.random() * 10 - 5;
+                            scale = 0.85 - Math.abs(diff) * 0.03;
+                            opacity = 0.5 - Math.abs(diff) * 0.1;
+                        } else { // diff > 0
+                            // Note: .hidden-front class applies a transform in CSS.
+                            // If you want JS to control this state entirely, remove the transform from .hidden-front CSS
+                            // For now, we apply JS transform which will override CSS if .hidden-front is added,
+                            // but let's not add .hidden-front here to avoid confusion. The JS transform handles the positioning.
+                            rotation = Math.random() * 6 + 3;
+                            translateX = -50 + Math.random() * 10 + 5;
+                            translateY = -50 + Math.random() * 10 - 5;
+                            scale = 0.95 + diff * 0.01;
+                            opacity = 0.7 + diff * 0.05;
+                        }
+                        page.style.transform = `translate(${translateX}%, ${translateY}%) rotate(${rotation}deg) scale(${scale})`;
+                        page.style.opacity = Math.max(0.2, opacity);
+                        page.style.zIndex = zIndex;
+                        // Ensure pointer events are disabled for non-active pages for reliability
+                        page.style.pointerEvents = 'none';
+                    }
+
+                    // Re-enable pointer events only for the active page IF it wasn't clicked
+                    // (Click handler below will handle bringing to front)
+                    if (index === activeIndex) {
+                       page.style.pointerEvents = 'auto'; // Make sure active page is clickable/scrollable
+                       // Add cursor styles back explicitly if needed, although .active class should handle this
+                       page.style.cursor = 'default';
+                    } else {
+                       page.style.cursor = 'pointer'; // Indicate other pages can be clicked (JS handles it)
+                    }
+
+
+                    // Handle click to bring page to front
+                    page.removeEventListener('click', handlePageClick);
+                    page.addEventListener('click', handlePageClick);
+                });
+
+                // Update button states based on order
+                const activePage = pages[activeIndex];
+                const currentOrder = parseInt(activePage?.dataset.order || 0);
+                const orders = pages.map(p => parseInt(p.dataset.order || p.dataset.internalIndex));
+                const minOrder = Math.min(...orders);
+                const maxOrder = Math.max(...orders);
+
+                prevButton.disabled = currentOrder <= minOrder;
+                nextButton.disabled = currentOrder >= maxOrder;
+            }
+
+            function handlePageClick(event) {
+                 // Only trigger if the clicked page is NOT already active
+                 if (!event.currentTarget.classList.contains('active')) {
+                    const clickedIndex = pages.findIndex(p => p === event.currentTarget);
+                    if (clickedIndex !== -1) {
+                        bringPageToFront(clickedIndex);
+                    }
+                 }
+             }
+
+             function bringPageToFront(index) {
+                 if (index >= 0 && index < pages.length) {
+                     activeIndex = index;
+                     updatePages();
+                 }
+             }
+
+            prevButton.addEventListener('click', () => {
+                const currentOrder = parseInt(pages[activeIndex].dataset.order || activeIndex);
+                const possiblePrevOrders = pages
+                    .map(p => parseInt(p.dataset.order || p.dataset.internalIndex))
+                    .filter(order => order < currentOrder);
+
+                if (possiblePrevOrders.length > 0) {
+                    const targetOrder = Math.max(...possiblePrevOrders);
+                    const prevPageIndex = pages.findIndex(p => parseInt(p.dataset.order || p.dataset.internalIndex) === targetOrder);
+                     if (prevPageIndex !== -1) {
+                         bringPageToFront(prevPageIndex);
+                    }
+                }
+            });
+
+            nextButton.addEventListener('click', () => {
+                const currentOrder = parseInt(pages[activeIndex].dataset.order || activeIndex);
+                const possibleNextOrders = pages
+                    .map(p => parseInt(p.dataset.order || p.dataset.internalIndex))
+                    .filter(order => order > currentOrder);
+
+                if (possibleNextOrders.length > 0) {
+                    const targetOrder = Math.min(...possibleNextOrders);
+                    const nextPageIndex = pages.findIndex(p => parseInt(p.dataset.order || p.dataset.internalIndex) === targetOrder);
+                    if (nextPageIndex !== -1) {
+                       bringPageToFront(nextPageIndex);
+                    }
+                }
+            });
+
+            // --- Loader Hiding ---
+            const loader = document.querySelector('.loader');
+            if (loader) setTimeout(() => loader.classList.add('hidden'), 2500);
+
+            // --- Initial setup ---
+            pages.forEach((page, index) => page.dataset.originalIndex = index);
+            pages.sort((a, b) => (parseInt(a.dataset.order || 0)) - (parseInt(b.dataset.order || 0)));
+            activeIndex = pages.findIndex(p => parseInt(p.dataset.order || -1) === 1);
+            if (activeIndex === -1) activeIndex = 0;
+            updatePages();
+        });
+    </script>
+</body>
+</html>
